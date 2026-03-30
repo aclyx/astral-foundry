@@ -1,0 +1,14 @@
+[project]
+name = "astral-foundry-core"
+version = "0.1.0"
+description = "Shared typed domain logic for the Astral Foundry issue digest workspace."
+requires-python = ">=3.12,<3.13"
+
+[build-system]
+requires = ["uv_build>=0.11.2,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+# Python distribution names and import package names are separate concerns.
+module-name = "core"
+module-root = "src"

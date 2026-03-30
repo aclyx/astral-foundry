@@ -1,0 +1,23 @@
+[project]
+name = "astral-foundry-cli"
+version = "0.1.0"
+description = "CLI interface for the Astral Foundry issue digest workspace."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "astral-foundry-core",
+  "httpx>=0.28,<0.29",
+]
+
+[project.scripts]
+issue-digest = "cli_app.main:run"
+
+[build-system]
+requires = ["uv_build>=0.11.2,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv.sources]
+"astral-foundry-core" = { workspace = true }
+
+[tool.uv.build-backend]
+module-name = "cli_app"
+module-root = "src"

@@ -1,0 +1,64 @@
+[project]
+name = "astral-foundry"
+version = "0.1.0"
+description = "A serious learning workspace for modern Python development with Astral tooling."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "astral-foundry-api",
+  "astral-foundry-cli",
+]
+
+[dependency-groups]
+dev = [
+  "coverage[toml]>=7.8,<8",
+  "pytest>=8.4,<9",
+  "pytest-cov>=6.1,<7",
+  "ruff>=0.12,<0.13",
+]
+
+[tool.uv]
+# The root project is virtual: it owns workflow, tooling, and editable workspace deps.
+package = false
+default-groups = ["dev"]
+
+[tool.uv.workspace]
+members = [
+  "packages/core",
+  "packages/cli",
+  "packages/api",
+]
+
+[tool.uv.sources]
+"astral-foundry-api" = { workspace = true }
+"astral-foundry-cli" = { workspace = true }
+"astral-foundry-core" = { workspace = true }
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+  "B",
+  "E",
+  "F",
+  "I",
+  "UP",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers --import-mode=importlib --cov=core --cov=cli_app --cov=api --cov-report=term-missing"
+testpaths = ["packages"]
+
+[tool.coverage.run]
+branch = true
+source = ["core", "cli_app", "api"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
