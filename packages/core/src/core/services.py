@@ -143,6 +143,22 @@ def _demo_issues(source_name: str) -> tuple[Issue, ...]:
             created_at=_dt(2026, 3, 25, 9, 0),
             updated_at=_dt(2026, 3, 29, 11, 45),
         ),
+        Issue(
+            id="ISS-106",
+            title="Investigate support for blocked status in the digest",
+            status=IssueStatus.BLOCKED,
+            summary=(
+                "Some issues are blocked by external dependencies and can't be resolved until those are "
+                "addressed. It would be nice to track those separately instead of lumping them in with "
+                "open work."
+            ),
+            assignee=None,
+            labels=("research",),
+            source=source_name,
+            url="https://issues.example.local/ISS-106",
+            created_at=_dt(2026, 3, 26, 10, 30),
+            updated_at=_dt(2026, 3, 29, 12, 0),
+        ),
     )
 
 

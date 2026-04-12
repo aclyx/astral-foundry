@@ -15,6 +15,7 @@ class IssueStatus(StrEnum):
     OPEN = "open"
     IN_PROGRESS = "in_progress"
     CLOSED = "closed"
+    BLOCKED = "blocked"
 
 
 @dataclass(slots=True, frozen=True)

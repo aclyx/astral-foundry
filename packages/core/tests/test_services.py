@@ -19,13 +19,20 @@ def test_list_issues_filters_by_status_and_assignee() -> None:
     assert digest.total == 2
     assert [issue.id for issue in digest.items] == ["ISS-101", "ISS-104"]
 
+    digest = service.list_issues(
+        DigestRequest(status=IssueStatus.BLOCKED),
+    )
+
+    assert digest.total == 1
+    assert [issue.id for issue in digest.items] == ["ISS-106"]
+
 
 def test_list_issues_uses_config_default_limit() -> None:
     service = build_demo_service(CoreConfig(default_limit=2, source_name="demo"))
 
     digest = service.list_issues()
 
-    assert digest.total == 5
+    assert digest.total == 6
     assert digest.returned == 2
 
 
