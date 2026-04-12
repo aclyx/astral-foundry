@@ -33,6 +33,7 @@ class IssueDigestService:
             if self._matches_status(issue, resolved_request.status)
             and self._matches_assignee(issue, resolved_request.assignee)
             and issue.matches_search(resolved_request.search)
+            and self._matches_label(issue, resolved_request.label)
         ]
         filtered.sort(key=_sort_key, reverse=True)
         limited = tuple(filtered[: resolved_request.limit])
@@ -59,6 +60,12 @@ class IssueDigestService:
         if assignee is None:
             return True
         return (issue.assignee or "").casefold() == assignee.casefold()
+
+    @staticmethod
+    def _matches_label(issue: Issue, label: str | None) -> bool:
+        if label is None:
+            return True
+        return any(l.casefold() == label.casefold() for l in issue.labels)
 
 
 def build_demo_service(config: CoreConfig | None = None) -> IssueDigestService:
@@ -146,6 +153,3 @@ def _dt(year: int, month: int, day: int, hour: int, minute: int) -> datetime:
 def _sort_key(issue: Issue) -> tuple[datetime, datetime, str]:
     return issue.updated_at, issue.created_at, issue.id
 
-
-# TODO: Extend DigestRequest with label filtering once the current
-# status/assignee path feels routine.

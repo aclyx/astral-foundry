@@ -41,3 +41,12 @@ def test_invalid_limit_is_rejected() -> None:
 
     with pytest.raises(InvalidIssueRequestError):
         service.list_issues(DigestRequest(limit=0))
+
+
+def test_label_filtering() -> None:
+    service = build_demo_service(CoreConfig(source_name="demo"))
+
+    digest = service.list_issues(DigestRequest(label="api", limit=10))
+
+    assert digest.total == 1
+    assert [issue.id for issue in digest.items] == ["ISS-104"]

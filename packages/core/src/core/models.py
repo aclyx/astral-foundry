@@ -52,6 +52,7 @@ class DigestRequest:
     assignee: str | None = None
     search: str | None = None
     limit: int = 20
+    label: str | None = None
 
 
 @dataclass(slots=True, frozen=True)
