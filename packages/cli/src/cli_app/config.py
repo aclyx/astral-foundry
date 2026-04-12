@@ -36,9 +36,7 @@ class CliConfig:
         file_config = _read_config_file(resolved_path)
 
         api_base_url = str(
-            values.get("ISSUE_DIGEST_API_URL")
-            or file_config.get("api_base_url")
-            or "http://127.0.0.1:8000",
+            values.get("ISSUE_DIGEST_API_URL") or file_config.get("api_base_url") or "http://127.0.0.1:8000",
         ).rstrip("/")
         default_output = _parse_output_format(
             values.get("ISSUE_DIGEST_OUTPUT") or file_config.get("default_output") or "text",

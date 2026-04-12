@@ -29,9 +29,7 @@ def build_health_report(
     return report
 
 
-def _fetch_remote_health(
-    config: CliConfig, *, client: httpx.Client | None = None
-) -> dict[str, object]:
+def _fetch_remote_health(config: CliConfig, *, client: httpx.Client | None = None) -> dict[str, object]:
     close_client = client is None
     current_client = client or httpx.Client(timeout=config.timeout_seconds)
     try:

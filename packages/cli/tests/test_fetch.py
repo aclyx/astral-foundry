@@ -42,6 +42,4 @@ def test_fetch_items_wraps_http_errors() -> None:
     )
 
     with pytest.raises(SourceUnavailableError):
-        fetch_items(
-            CliConfig(api_base_url="http://testserver"), status=None, limit=None, client=client
-        )
+        fetch_items(CliConfig(api_base_url="http://testserver"), status=None, limit=None, client=client)

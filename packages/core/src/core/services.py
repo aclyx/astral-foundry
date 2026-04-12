@@ -73,10 +73,7 @@ def _demo_issues(source_name: str) -> tuple[Issue, ...]:
             id="ISS-101",
             title="Retry failed digest fetches when upstream rate limits",
             status=IssueStatus.OPEN,
-            summary=(
-                "The hourly digest job drops updates instead of backing off "
-                "when the source API returns 429."
-            ),
+            summary=("The hourly digest job drops updates instead of backing off when the source API returns 429."),
             assignee="alex",
             labels=("reliability", "backend"),
             source=source_name,
@@ -89,8 +86,7 @@ def _demo_issues(source_name: str) -> tuple[Issue, ...]:
             title="Normalize label casing before rendering summaries",
             status=IssueStatus.IN_PROGRESS,
             summary=(
-                "Some imported tickets arrive as BUG while others arrive as bug, "
-                "which leaks into the CLI output."
+                "Some imported tickets arrive as BUG while others arrive as bug, which leaks into the CLI output."
             ),
             assignee="sam",
             labels=("data-shape", "cli"),
@@ -104,8 +100,7 @@ def _demo_issues(source_name: str) -> tuple[Issue, ...]:
             title="Document local API workflow for the team",
             status=IssueStatus.CLOSED,
             summary=(
-                "The service is fine, but new contributors keep missing the uv "
-                "commands needed to boot it locally."
+                "The service is fine, but new contributors keep missing the uv commands needed to boot it locally."
             ),
             assignee=None,
             labels=("docs",),

@@ -17,10 +17,7 @@ def test_items_list_json_output(capsys) -> None:
 def test_cli_reads_local_config_file(tmp_path: Path, monkeypatch, capsys) -> None:
     config_path = tmp_path / ".astral-foundry.toml"
     config_path.write_text(
-        "[cli]\n"
-        "api_base_url = 'http://localhost:9000'\n"
-        "default_output = 'json'\n"
-        "timeout_seconds = 3.0\n",
+        "[cli]\napi_base_url = 'http://localhost:9000'\ndefault_output = 'json'\ntimeout_seconds = 3.0\n",
     )
     monkeypatch.chdir(tmp_path)
 
