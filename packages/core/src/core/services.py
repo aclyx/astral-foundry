@@ -65,7 +65,7 @@ class IssueDigestService:
     def _matches_label(issue: Issue, label: str | None) -> bool:
         if label is None:
             return True
-        return any(l.casefold() == label.casefold() for l in issue.labels)
+        return any(existing_label.casefold() == label.casefold() for existing_label in issue.labels)
 
 
 def build_demo_service(config: CoreConfig | None = None) -> IssueDigestService:
@@ -152,4 +152,3 @@ def _dt(year: int, month: int, day: int, hour: int, minute: int) -> datetime:
 
 def _sort_key(issue: Issue) -> tuple[datetime, datetime, str]:
     return issue.updated_at, issue.created_at, issue.id
-
