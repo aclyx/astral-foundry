@@ -15,6 +15,7 @@ dev = [
   "pytest>=8.4,<9",
   "pytest-cov>=6.1,<7",
   "ruff>=0.12,<0.13",
+  "ty>=0.0.30",
 ]
 
 [tool.uv]
@@ -50,6 +51,15 @@ select = [
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
+
+[tool.ty.environment]
+python-version = "3.12"
+
+[tool.ty.src]
+include = [
+  "packages",
+  "examples",
+]
 
 [tool.pytest.ini_options]
 addopts = "-ra --strict-config --strict-markers --import-mode=importlib --cov=core --cov=cli_app --cov=api --cov-report=term-missing"

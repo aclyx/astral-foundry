@@ -8,7 +8,7 @@ Goals
 
 - Understand the virtual root workspace and why the real code lives in package members
 - Use `uv` for Python installation, syncing, locking, and running commands
-- Use `ruff` and `pytest` as the everyday feedback loop
+- Use `ruff`, `ty`, and `pytest` as the everyday feedback loop
 
 What to read in the codebase
 
@@ -22,6 +22,7 @@ What to modify
 
 - Change the line length in Ruff and re-run formatting
 - Add one dev dependency to `pyproject.toml`, then refresh the lockfile
+- Run `uv run ty check` and fix one real type error instead of suppressing it
 
 Suggested exercises
 
@@ -33,6 +34,7 @@ What to notice if you come from TypeScript
 - The workspace root behaves more like a package manager root than a runtime root
 - Python packaging is explicit and installation-driven; importability comes from the environment, not path aliases
 - `uv run` replaces a lot of what would otherwise be `npx`, `pnpm exec`, or a custom shell wrapper
+- Type checking is optional to start with, but once you add it, keep it in the same fast local loop as linting and tests
 
 ## Milestone 2: Typed Core Library
 
@@ -182,7 +184,6 @@ What to modify
 
 Suggested exercises
 
-- Add type checking with a tool you actually plan to keep using
 - Add a release or package build check after you have a reason to publish artifacts
 
 What to notice if you come from TypeScript

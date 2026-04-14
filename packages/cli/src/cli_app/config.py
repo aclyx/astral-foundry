@@ -7,7 +7,7 @@ import tomllib
 from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Literal, Self
+from typing import Any, Literal, Self, cast
 
 from core.errors import ConfigurationError
 
@@ -85,10 +85,10 @@ def _read_config_file(path: Path) -> dict[str, Any]:
 def _parse_output_format(raw: str) -> OutputFormat:
     if raw not in {"text", "json"}:
         raise ConfigurationError("ISSUE_DIGEST_OUTPUT must be 'text' or 'json'")
-    return raw
+    return cast(OutputFormat, raw)
 
 
-def _parse_timeout(raw: object) -> float:
+def _parse_timeout(raw: str | float | int | None) -> float:
     if raw is None:
         return 5.0
     try:

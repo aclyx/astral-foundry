@@ -1,3 +1,5 @@
+from typing import cast
+
 import httpx
 import pytest
 from cli_app.commands.fetch import fetch_items
@@ -32,7 +34,8 @@ def test_fetch_items_uses_httpx_and_returns_payload() -> None:
     )
 
     assert payload["returned"] == 1
-    assert payload["items"][0]["id"] == "ISS-101"
+    items = cast(list[dict[str, object]], payload["items"])
+    assert items[0]["id"] == "ISS-101"
 
 
 def test_fetch_items_wraps_http_errors() -> None:
