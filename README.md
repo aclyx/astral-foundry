@@ -150,8 +150,8 @@ uv run python examples/async_script.py
 
 ## Milestone Checklist
 
-- [ ] Milestone 1: workspace and tooling fluency
-- [ ] Milestone 2: typed core library fluency
+- [x] Milestone 1: workspace and tooling fluency
+- [x] Milestone 2: typed core library fluency
 - [ ] Milestone 3: CLI application fluency
 - [ ] Milestone 4: FastAPI service fluency
 - [ ] Milestone 5: async I/O and integration fluency
@@ -161,7 +161,6 @@ Detailed milestone guidance lives in [`docs/learning-path.md`](docs/learning-pat
 
 ## Next Exercises
 
-- Add label filtering to `DigestRequest` and thread it through the service, CLI, and API.
 - Add real pagination metadata to the `/items` endpoint and keep the response shape stable.
 - Add a new CLI subcommand that exports a digest to a file path instead of stdout.
 - Replace the in-memory issue source with a small HTTP-backed source that uses `httpx`.

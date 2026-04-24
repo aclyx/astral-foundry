@@ -15,7 +15,7 @@ def test_items_list_json_output(capsys) -> None:
 
 
 def test_items_list_with_label_filter(capsys) -> None:
-    exit_code = run(["items", "list", "--label", "api", "--limit", "10"])
+    exit_code = run(["items", "list", "--label", "api", "--limit", "10", "--output", "json"])
 
     captured = capsys.readouterr()
     payload = json.loads(captured.out)
