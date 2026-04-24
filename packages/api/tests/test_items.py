@@ -13,6 +13,16 @@ def test_list_items_returns_filtered_collection() -> None:
     assert all(item["status"] == "open" for item in payload["items"])
 
 
+def test_list_items_with_label_filter() -> None:
+    client = TestClient(create_app())
+
+    response = client.get("/items", params={"label": "api", "limit": 10})
+    payload = response.json()
+    assert response.status_code == 200
+    assert payload["returned"] == 1
+    assert payload["items"][0]["id"] == "ISS-104"
+
+
 def test_get_item_returns_single_issue() -> None:
     client = TestClient(create_app())
 

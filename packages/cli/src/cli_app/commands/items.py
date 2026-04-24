@@ -19,12 +19,14 @@ def list_items(
     search: str | None,
     limit: int | None,
     service: IssueDigestService | None = None,
+    label: str | None = None,
 ) -> IssueDigest:
     current_service = service or build_demo_service()
     request = DigestRequest(
         status=status,
         assignee=assignee,
         search=search,
+        label=label,
         limit=limit or current_service.config.default_limit,
     )
     return current_service.list_issues(request)

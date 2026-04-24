@@ -21,6 +21,7 @@ def read_items(
     assignee: Annotated[str | None, Query(max_length=100)] = None,
     search: Annotated[str | None, Query(max_length=100)] = None,
     limit: Annotated[int | None, Query(ge=1, le=100)] = None,
+    label: Annotated[str | None, Query(max_length=50)] = None,
 ) -> ItemListResponse:
     return list_items(
         service,
@@ -28,6 +29,7 @@ def read_items(
         assignee=assignee,
         search=search,
         limit=limit,
+        label=label,
     )
 
 

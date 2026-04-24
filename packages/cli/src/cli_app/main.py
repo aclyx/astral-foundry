@@ -50,6 +50,7 @@ def build_parser() -> argparse.ArgumentParser:
     items_list.add_argument("--status", choices=tuple(status.value for status in IssueStatus))
     items_list.add_argument("--assignee")
     items_list.add_argument("--search")
+    items_list.add_argument("--label")
     items_list.add_argument("--limit", type=_positive_int)
     items_list.add_argument("--output", choices=("text", "json"))
     items_list.set_defaults(handler=_run_items_list)
@@ -101,6 +102,7 @@ def _run_items_list(args: argparse.Namespace, config: CliConfig) -> object:
         assignee=args.assignee,
         search=args.search,
         limit=args.limit,
+        label=args.label,
     )
 
 

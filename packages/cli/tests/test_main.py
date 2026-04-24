@@ -14,6 +14,16 @@ def test_items_list_json_output(capsys) -> None:
     assert captured.err == ""
 
 
+def test_items_list_with_label_filter(capsys) -> None:
+    exit_code = run(["items", "list", "--label", "api", "--limit", "10"])
+
+    captured = capsys.readouterr()
+    payload = json.loads(captured.out)
+    assert exit_code == 0
+    assert payload["returned"] == 1
+    assert payload["items"][0]["id"] == "ISS-104"
+
+
 def test_cli_reads_local_config_file(tmp_path: Path, monkeypatch, capsys) -> None:
     config_path = tmp_path / ".astral-foundry.toml"
     config_path.write_text(

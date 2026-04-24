@@ -14,12 +14,14 @@ def list_items(
     assignee: str | None,
     search: str | None,
     limit: int | None,
+    label: str | None,
 ) -> ItemListResponse:
     digest = service.list_issues(
         DigestRequest(
             status=status,
             assignee=assignee,
             search=search,
+            label=label,
             limit=limit or service.config.default_limit,
         ),
     )
