@@ -152,7 +152,7 @@ uv run python examples/async_script.py
 
 - [x] Milestone 1: workspace and tooling fluency
 - [x] Milestone 2: typed core library fluency
-- [ ] Milestone 3: CLI application fluency
+- [x] Milestone 3: CLI application fluency
 - [x] Milestone 4: FastAPI service fluency
 - [ ] Milestone 5: async I/O and integration fluency
 - [ ] Milestone 6: production-discipline fluency
@@ -161,5 +161,4 @@ Detailed milestone guidance lives in [`docs/learning-path.md`](docs/learning-pat
 
 ## Next Exercises
 
-- Add a new CLI subcommand that exports a digest to a file path instead of stdout.
 - Replace the in-memory issue source with a small HTTP-backed source that uses `httpx`.
