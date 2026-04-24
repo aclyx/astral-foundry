@@ -21,6 +21,7 @@ def read_items(
     assignee: Annotated[str | None, Query(max_length=100)] = None,
     search: Annotated[str | None, Query(max_length=100)] = None,
     limit: Annotated[int | None, Query(ge=1, le=100)] = None,
+    page: Annotated[int | None, Query(ge=1)] = None,
     label: Annotated[str | None, Query(max_length=50)] = None,
 ) -> ItemListResponse:
     return list_items(
@@ -29,6 +30,7 @@ def read_items(
         assignee=assignee,
         search=search,
         limit=limit,
+        page=page,
         label=label,
     )
 
@@ -39,6 +41,3 @@ def read_item(item_id: str, service: IssueServiceDep) -> IssueRead:
         return get_item(service, item_id)
     except IssueNotFoundError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
-
-
-# TODO: Add page or cursor parameters once the list view needs stable pagination semantics.

@@ -53,6 +53,7 @@ class DigestRequest:
     assignee: str | None = None
     search: str | None = None
     limit: int = 20
+    page: int = 1
     label: str | None = None
 
 

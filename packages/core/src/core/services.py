@@ -36,7 +36,10 @@ class IssueDigestService:
             and self._matches_label(issue, resolved_request.label)
         ]
         filtered.sort(key=_sort_key, reverse=True)
-        limited = tuple(filtered[: resolved_request.limit])
+
+        start = (resolved_request.page - 1) * resolved_request.limit
+        end = start + resolved_request.limit
+        limited = tuple(filtered[start:end])
         return IssueDigest(request=resolved_request, total=len(filtered), items=limited)
 
     def get_issue(self, issue_id: str) -> Issue:
@@ -49,6 +52,9 @@ class IssueDigestService:
         resolved = request or DigestRequest(limit=self.config.default_limit)
         if resolved.limit <= 0:
             raise InvalidIssueRequestError("limit must be greater than zero")
+        if resolved.page <= 0:
+            raise InvalidIssueRequestError("page must be greater than zero")
+
         return resolved
 
     @staticmethod

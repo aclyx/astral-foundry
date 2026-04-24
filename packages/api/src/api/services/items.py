@@ -14,6 +14,7 @@ def list_items(
     assignee: str | None,
     search: str | None,
     limit: int | None,
+    page: int | None,
     label: str | None,
 ) -> ItemListResponse:
     digest = service.list_issues(
@@ -22,12 +23,16 @@ def list_items(
             assignee=assignee,
             search=search,
             label=label,
+            page=page or 1,
             limit=limit or service.config.default_limit,
         ),
     )
     return ItemListResponse(
         total=digest.total,
         returned=digest.returned,
+        page=digest.request.page,
+        limit=digest.request.limit,
+        has_more=digest.request.page * digest.request.limit < digest.total,
         items=[IssueRead.from_domain(issue) for issue in digest.items],
     )
 

@@ -23,6 +23,19 @@ def test_list_items_with_label_filter() -> None:
     assert payload["items"][0]["id"] == "ISS-104"
 
 
+def test_pagination_parameters() -> None:
+    client = TestClient(create_app())
+
+    response = client.get("/items", params={"limit": 2, "page": 2})
+    payload = response.json()
+    assert response.status_code == 200
+    assert payload["returned"] == 2
+    assert payload["page"] == 2
+    assert payload["limit"] == 2
+    assert payload["has_more"] is True
+    assert [item["id"] for item in payload["items"]] == ["ISS-101", "ISS-102"]
+
+
 def test_get_item_returns_single_issue() -> None:
     client = TestClient(create_app())
 

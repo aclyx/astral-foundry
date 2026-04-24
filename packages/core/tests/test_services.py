@@ -50,6 +50,13 @@ def test_invalid_limit_is_rejected() -> None:
         service.list_issues(DigestRequest(limit=0))
 
 
+def test_invalid_page_is_rejected() -> None:
+    service = build_demo_service()
+
+    with pytest.raises(InvalidIssueRequestError):
+        service.list_issues(DigestRequest(page=0))
+
+
 def test_label_filtering() -> None:
     service = build_demo_service(CoreConfig(source_name="demo"))
 

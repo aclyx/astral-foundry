@@ -43,4 +43,7 @@ class ItemListResponse(BaseModel):
 
     total: int
     returned: int
+    page: int
+    limit: int
+    has_more: bool
     items: list[IssueRead]
