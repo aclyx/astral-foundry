@@ -46,3 +46,16 @@ def test_fetch_items_wraps_http_errors() -> None:
 
     with pytest.raises(SourceUnavailableError):
         fetch_items(CliConfig(api_base_url="http://testserver"), status=None, limit=None, client=client)
+
+
+def test_fetch_items_wraps_timeout_errors() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        raise httpx.TimeoutException("timed out", request=request)
+
+    client = httpx.Client(
+        transport=httpx.MockTransport(handler),
+        base_url="http://testserver",
+    )
+
+    with pytest.raises(SourceUnavailableError, match="timed out"):
+        fetch_items(CliConfig(api_base_url="http://testserver"), status=None, limit=None, client=client)

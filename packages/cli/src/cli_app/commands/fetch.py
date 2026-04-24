@@ -22,17 +22,16 @@ def fetch_items(
         params["limit"] = limit
 
     close_client = client is None
-    current_client = client or httpx.Client(timeout=config.timeout_seconds)
+    timeout = httpx.Timeout(timeout=config.timeout_seconds, connect=config.timeout_seconds)
+    current_client = client or httpx.Client(timeout=timeout)
     try:
         response = current_client.get(f"{config.api_base_url}/items", params=params)
         response.raise_for_status()
         return dict(response.json())
+    except httpx.TimeoutException as exc:
+        raise SourceUnavailableError(f"request to {config.api_base_url!r} timed out") from exc
     except httpx.HTTPError as exc:
         raise SourceUnavailableError(f"could not fetch items from {config.api_base_url!r}") from exc
     finally:
         if close_client:
             current_client.close()
-
-
-# TODO: Replace the plain timeout with a richer httpx.Timeout setup
-# when you point this at a real API.
