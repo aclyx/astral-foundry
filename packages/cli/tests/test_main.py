@@ -24,6 +24,23 @@ def test_items_list_with_label_filter(capsys) -> None:
     assert payload["items"][0]["id"] == "ISS-104"
 
 
+def test_items_export_writes_json_file(tmp_path: Path, monkeypatch, capsys) -> None:
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.delenv("ISSUE_DIGEST_OUTPUT", raising=False)
+    export_path = tmp_path / "digest.json"
+
+    exit_code = run(["items", "export", "--path", str(export_path), "--label", "api", "--limit", "10"])
+
+    captured = capsys.readouterr()
+    payload = json.loads(export_path.read_text())
+    assert exit_code == 0
+    assert f"path: {export_path}" in captured.out
+    assert "exported: 1" in captured.out
+    assert captured.err == ""
+    assert payload["returned"] == 1
+    assert payload["items"][0]["id"] == "ISS-104"
+
+
 def test_cli_reads_local_config_file(tmp_path: Path, monkeypatch, capsys) -> None:
     config_path = tmp_path / ".astral-foundry.toml"
     config_path.write_text(

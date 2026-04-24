@@ -11,7 +11,7 @@ from core import ConfigurationError, IssueDigestError, IssueStatus
 
 from cli_app.commands.fetch import fetch_items
 from cli_app.commands.health import build_health_report
-from cli_app.commands.items import list_items, show_item
+from cli_app.commands.items import export_items, list_items, show_item
 from cli_app.config import CliConfig
 from cli_app.output import emit
 
@@ -45,6 +45,15 @@ def build_parser() -> argparse.ArgumentParser:
 
     items = subparsers.add_parser("items", help="Work with local in-memory issues.")
     item_subparsers = items.add_subparsers(dest="items_command")
+
+    items_export = item_subparsers.add_parser("export", help="Export items to a file.")
+    items_export.add_argument("--path", type=Path, required=True, help="Path to export issues to (e.g. JSON file).")
+    items_export.add_argument("--status", choices=tuple(status.value for status in IssueStatus))
+    items_export.add_argument("--assignee")
+    items_export.add_argument("--search")
+    items_export.add_argument("--label")
+    items_export.add_argument("--limit", type=_positive_int)
+    items_export.set_defaults(handler=_run_items_export)
 
     items_list = item_subparsers.add_parser("list", help="List local issues.")
     items_list.add_argument("--status", choices=tuple(status.value for status in IssueStatus))
@@ -109,6 +118,19 @@ def _run_items_list(args: argparse.Namespace, config: CliConfig) -> object:
 def _run_items_show(args: argparse.Namespace, config: CliConfig) -> object:
     del config
     return show_item(args.issue_id)
+
+
+def _run_items_export(args: argparse.Namespace, config: CliConfig) -> dict[str, object]:
+    del config
+    status = IssueStatus(args.status) if args.status else None
+    return export_items(
+        path=args.path,
+        status=status,
+        assignee=args.assignee,
+        search=args.search,
+        limit=args.limit,
+        label=args.label,
+    )
 
 
 def _positive_int(raw: str) -> int:
