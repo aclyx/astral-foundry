@@ -38,6 +38,28 @@ def test_fetch_items_uses_httpx_and_returns_payload() -> None:
     assert items[0]["id"] == "ISS-101"
 
 
+def test_fetch_with_assignee_and_search_and_label() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        assert request.url.params["assignee"] == "alice"
+        assert request.url.params["search"] == "bug"
+        assert request.url.params["label"] == "high-priority"
+        return httpx.Response(200, json={"total": 0, "returned": 0, "items": []})
+
+    client = httpx.Client(transport=httpx.MockTransport(handler), base_url="http://testserver")
+    payload = fetch_items(
+        CliConfig(api_base_url="http://testserver"),
+        status=None,
+        page=None,
+        limit=None,
+        assignee="alice",
+        search="bug",
+        label="high-priority",
+        client=client,
+    )
+
+    assert payload["returned"] == 0
+
+
 def test_fetch_items_wraps_http_errors() -> None:
     client = httpx.Client(
         transport=httpx.MockTransport(lambda request: httpx.Response(503, request=request)),

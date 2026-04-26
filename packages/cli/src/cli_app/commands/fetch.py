@@ -13,13 +13,25 @@ def fetch_items(
     *,
     status: str | None,
     limit: int | None,
+    page: int | None = None,
+    assignee: str | None = None,
+    search: str | None = None,
+    label: str | None = None,
     client: httpx.Client | None = None,
 ) -> dict[str, object]:
     params: dict[str, str | int] = {}
     if status:
         params["status"] = status
+    if page is not None:
+        params["page"] = page
     if limit is not None:
         params["limit"] = limit
+    if assignee is not None:
+        params["assignee"] = assignee
+    if search is not None:
+        params["search"] = search
+    if label is not None:
+        params["label"] = label
 
     close_client = client is None
     timeout = httpx.Timeout(timeout=config.timeout_seconds, connect=config.timeout_seconds)

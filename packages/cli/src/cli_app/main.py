@@ -39,8 +39,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     fetch = subparsers.add_parser("fetch", help="Fetch items from the configured API.")
     fetch.add_argument("--status", choices=tuple(status.value for status in IssueStatus))
+    fetch.add_argument("--page", type=_positive_int)
     fetch.add_argument("--limit", type=_positive_int)
     fetch.add_argument("--output", choices=("text", "json"))
+    fetch.add_argument("--assignee", help="Filter items by assignee.")
+    fetch.add_argument("--search", help="Filter items by search term in title or description.")
+    fetch.add_argument("--label", help="Filter items by label.")
     fetch.set_defaults(handler=_run_fetch)
 
     items = subparsers.add_parser("items", help="Work with local in-memory issues.")
@@ -100,7 +104,15 @@ def _run_health(args: argparse.Namespace, config: CliConfig) -> dict[str, object
 
 
 def _run_fetch(args: argparse.Namespace, config: CliConfig) -> dict[str, object]:
-    return fetch_items(config, status=args.status, limit=args.limit)
+    return fetch_items(
+        config,
+        status=args.status,
+        assignee=args.assignee,
+        search=args.search,
+        label=args.label,
+        limit=args.limit,
+        page=args.page,
+    )
 
 
 def _run_items_list(args: argparse.Namespace, config: CliConfig) -> object:
